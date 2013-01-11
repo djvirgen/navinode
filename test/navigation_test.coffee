@@ -41,8 +41,22 @@ describe 'Navigation', ->
     navigation.pages[1].should.have.property 'label', 'page1'
     navigation.pages[1].pages[0].should.have.property 'label', 'page2'
 
-  it 'auto-imports config file', ->
+  it 'auto-imports yaml config file', ->
     navigation = new Navigation "#{__dirname}/configs/nav.yaml"
+    navigation.should.have.property 'pages'
+    navigation.pages[0].should.have.property 'label', 'home'
+    navigation.pages[1].should.have.property 'label', 'page1'
+    navigation.pages[1].pages[0].should.have.property 'label', 'page2'
+
+  it 'auto-imports js config file', ->
+    navigation = new Navigation "#{__dirname}/configs/nav.js"
+    navigation.should.have.property 'pages'
+    navigation.pages[0].should.have.property 'label', 'home'
+    navigation.pages[1].should.have.property 'label', 'page1'
+    navigation.pages[1].pages[0].should.have.property 'label', 'page2'
+
+  it 'auto-imports coffee config file', ->
+    navigation = new Navigation "#{__dirname}/configs/nav.coffee"
     navigation.should.have.property 'pages'
     navigation.pages[0].should.have.property 'label', 'home'
     navigation.pages[1].should.have.property 'label', 'page1'
