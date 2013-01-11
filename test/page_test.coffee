@@ -7,6 +7,7 @@ describe 'Page', ->
     uri:      '/test-uri'
     class:    'test-class'
     label:    'Test Label'
+    rel:      'test-rel'
 
   describe 'properties', ->
     beforeEach ->
@@ -16,6 +17,23 @@ describe 'Page', ->
       do (key, value) ->
         it "has property #{key}", ->
           this.page.should.have.property key, value
+
+    it 'accepts array of Page objects', ->
+      data = pages: [new Page, new Page]
+      page = new Page data
+      page.pages.should.have.lengthOf 2
+      page.pages[0].should.be.instanceOf Page
+      page.pages[1].should.be.instanceOf Page
+
+    it 'creates Page objects if passed in as plain objects', ->
+      data = pages: [
+        {id: 'test-id-1'},
+        {id: 'test-id-2'}
+      ]
+      page = new Page data
+      page.pages.should.have.lengthOf 2
+      page.pages[0].should.be.instanceOf Page
+      page.pages[1].should.be.instanceOf Page
 
   describe 'match()', ->
     beforeEach ->
@@ -39,24 +57,6 @@ describe 'Page', ->
     it 'is false if page is not active', ->
       page = new Page active: false
       page.isActive().should.be.false
-
-  describe 'instantiation', ->
-    it 'passes pages to contents', ->
-      data = pages: [new Page, new Page]
-      page = new Page data
-      page.pages.should.have.lengthOf 2
-      page.pages[0].should.be.instanceOf Page
-      page.pages[1].should.be.instanceOf Page
-
-    it 'creates Page objects if passed in as plain objects', ->
-      data = pages: [
-        {id: 'test-id-1'},
-        {id: 'test-id-2'}
-      ]
-      page = new Page data
-      page.pages.should.have.lengthOf 2
-      page.pages[0].should.be.instanceOf Page
-      page.pages[1].should.be.instanceOf Page
 
   describe 'addPage()', ->
     it 'can add page to contents', ->

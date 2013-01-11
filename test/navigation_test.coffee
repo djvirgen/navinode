@@ -76,7 +76,7 @@ describe 'Navigation', ->
       page.should.be.ok
       page.should.have.property 'id', 'page2'
 
-  describe 'activateByUri', ->
+  describe 'activateByUri()', ->
     beforeEach ->
       this.nav = new Navigation "#{__dirname}/configs/nav.yaml"
 
@@ -90,7 +90,7 @@ describe 'Navigation', ->
       page = this.nav.findByUri '/page1/page2'
       page.isActive().should.be.true
 
-  describe 'Express middleware', ->
+  describe 'middleware()', ->
     beforeEach ->
       this.nav = new Navigation "#{__dirname}/configs/nav.yaml"
 

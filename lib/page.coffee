@@ -5,6 +5,7 @@ class Page
     @uri = data.uri
     @label = data.label
     @active = !!data.active
+    @rel = data.rel
     @pages = []
 
     if Array.isArray data.pages
