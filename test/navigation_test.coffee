@@ -89,3 +89,15 @@ describe 'Navigation', ->
       this.nav.activateByUri '/page1/page2'
       page = this.nav.findByUri '/page1/page2'
       page.isActive().should.be.true
+
+  describe 'Express middleware', ->
+    beforeEach ->
+      this.nav = new Navigation "#{__dirname}/configs/nav.yaml"
+
+    it 'activates page based on current path', (done) ->
+      req = {url: '/page1/page2'}
+      res = {}
+      this.nav.middleware req, {}, =>
+        page = this.nav.findByUri '/page1/page2'
+        page.isActive().should.be.true
+        done()

@@ -36,4 +36,8 @@ class Navigation
     return unless page?
     page.active = true
 
+  middleware: (req, res, next) ->
+    @activateByUri req.url
+    next()
+
 module.exports = Navigation
