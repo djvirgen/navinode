@@ -103,6 +103,24 @@ describe 'Navigation', ->
       page = this.nav.findByUri '/page1/page2'
       page.isActive().should.be.true
 
+  describe 'remove()', ->
+    beforeEach ->
+      this.nav = new Navigation "#{__dirname}/configs/nav.yaml"
+
+    it 'removes page by reference', ->
+      page = this.nav.pages[1]
+      this.nav.pages.should.have.lengthOf 2
+      removed = this.nav.remove page
+      removed.should.be.true
+      this.nav.pages.should.have.lengthOf 1
+
+    it 'removes nested page by reference', ->
+      page = this.nav.findById 'page3'
+      this.nav.pages[1].pages.should.have.lengthOf 2
+      removed = this.nav.remove page
+      removed.should.be.true
+      this.nav.pages[1].pages.should.have.lengthOf 1
+
   describe 'middleware()', ->
     beforeEach ->
       this.nav = new Navigation "#{__dirname}/configs/nav.yaml"

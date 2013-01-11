@@ -57,5 +57,20 @@ class Page
       break if active
 
     active
+
+  remove: (page) ->
+    removed = false
+
+    for i, _page of @pages
+      if _page == page
+        # Found it!
+        deleted = @pages.splice i, 1 # Deletes page from array
+        removed = true
+        break
+
+      removed = _page.remove page
+      break if removed
+
+    removed
   
 module.exports = Page

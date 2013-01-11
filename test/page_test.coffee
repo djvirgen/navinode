@@ -46,19 +46,6 @@ describe 'Page', ->
     it 'is false if uri does not match', ->
       this.page.match('/not-match').should.be.false
 
-  describe 'isActive()', ->
-    it 'is false by default', ->
-      page = new Page
-      page.isActive().should.be.false
-
-    it 'is true if page is active', ->
-      page = new Page active: true
-      page.isActive().should.be.true
-
-    it 'is false if page is not active', ->
-      page = new Page active: false
-      page.isActive().should.be.false
-
   describe 'addPage()', ->
     it 'can add page to contents', ->
       page = new Page
@@ -89,6 +76,14 @@ describe 'Page', ->
       page = new Page
       page.isActive().should.be.false
 
+    it 'is true if page is active', ->
+      page = new Page active: true
+      page.isActive().should.be.true
+
+    it 'is false if page is not active', ->
+      page = new Page active: false
+      page.isActive().should.be.false
+
     it 'is true if at least one immediate descendent page is active', ->
       page = new Page
       page1 = new Page
@@ -114,7 +109,7 @@ describe 'Page', ->
       page.addPage subPage
       page.isActive().should.be.true
 
-    it 'is false if absolutely no descendents pages are active', ->
+    it 'is false if absolutely no descendent pages are active', ->
       page = new Page
       subPage = new Page
       subSubPage = new Page
@@ -123,3 +118,35 @@ describe 'Page', ->
       subPage.addPage subSubPage
       page.addPage subPage
       page.isActive().should.be.false
+
+  describe 'removePage()', ->
+    beforeEach ->
+      data =
+        id: 'top-level-page'
+        pages: 
+          '2nd-level-page':
+            pages: 
+              '3rd-level-page': {}
+              'another-3rd-level-page': {}
+          'another-2nd-level-page': {}
+      
+      this.page = new Page data
+
+    it 'returns false if page is not found', ->
+      page = new Page
+      removed = this.page.remove page
+      removed.should.be.false
+
+    it 'removes page by reference', ->
+      page = this.page.pages[1]
+      this.page.pages.should.have.lengthOf 2
+      removed = this.page.remove page
+      removed.should.be.true
+      this.page.pages.should.have.lengthOf 1
+
+    it 'removes nested page by reference', ->
+      page = this.page.findById '3rd-level-page'
+      this.page.pages[0].pages.should.have.lengthOf 2
+      removed = this.page.remove page
+      removed.should.be.true
+      this.page.pages[0].pages.should.have.lengthOf 1

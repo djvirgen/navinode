@@ -36,6 +36,21 @@ class Navigation
     return unless page?
     page.active = true
 
+  remove: (page) ->
+    removed = false
+
+    for i, _page of @pages
+      if _page == page
+        # Found it!
+        deleted = @pages.splice i, 1 # Deletes page from array
+        removed = true
+        break
+
+      removed = _page.remove page
+      break if removed
+
+    removed
+
   middleware: (req, res, next) ->
     @activateByUri req.url
     next()

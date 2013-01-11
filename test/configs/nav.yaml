@@ -8,3 +8,6 @@ page1:
     page2:
       label: 'page2'
       uri: '/page1/page2'
+    page3:
+      label: 'page3'
+      uri: '/page1/page3'
