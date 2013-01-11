@@ -3,7 +3,6 @@ require 'js-yaml'
 lib = require '../lib'
 Navigation = lib.Navigation
 Page = lib.Page
-Container = lib.Container
 
 describe 'Navigation', ->
   config =
