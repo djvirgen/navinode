@@ -8,6 +8,7 @@ describe 'Page', ->
     class:    'test-class'
     label:    'Test Label'
     rel:      'test-rel'
+    hidden:   true
 
   describe 'properties', ->
     beforeEach ->

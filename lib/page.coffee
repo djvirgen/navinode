@@ -6,6 +6,7 @@ class Page
     @label = data.label
     @active = !!data.active
     @rel = data.rel
+    @hidden = !!data.hidden
     @pages = []
 
     if Array.isArray data.pages
