@@ -1,0 +1,26 @@
+{
+  "name": "navinode",
+  "version": "0.0.1",
+  "description": "Site navigation with support for generating site navigation html, breadcrumbs, and sitemap",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/djvirgen/navinode.git"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "coffee-script": "*"
+  },
+  "devDependencies": {
+    "js-yaml": "*",
+    "mocha": "~1.6.0",
+    "should": "*"
+  },
+  "keywords": [
+    "navigation, breadcrumbs, sitemap"
+  ],
+  "author": "Hector Virgen (http://www.virgentech.com) <hector@virgentech.com>",
+  "license": "BSD"
+}
