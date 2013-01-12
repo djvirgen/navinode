@@ -31,7 +31,12 @@ class Navigation
 
     found
 
+  deactivateAll: ->
+    for page in @pages
+      page.deactivateAll()
+
   activateByUri: (uri) ->
+    @deactivateAll()
     page = @findByUri uri
     return unless page?
     page.active = true
@@ -51,8 +56,9 @@ class Navigation
 
     removed
 
-  middleware: (req, res, next) ->
-    @activateByUri req.url
-    next()
+  middleware: ->
+    (req, res, next) =>
+      @activateByUri req.url
+      next()
 
 module.exports = Navigation

@@ -14,7 +14,7 @@ class Helpers
 
     if content?
       selfClose = false # cannot self-close if there is content
-      html += content
+      html += ">#{content}"
 
     html += if selfClose then " />" else "</#{tag}>"
 

@@ -73,5 +73,10 @@ class Page
       break if removed
 
     removed
+
+  deactivateAll: ->
+    @active = false
+    for page in @pages
+      page.deactivateAll()
   
 module.exports = Page
