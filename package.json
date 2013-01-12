@@ -11,9 +11,11 @@
     "test": "mocha"
   },
   "dependencies": {
-    "coffee-script": "*"
+    "coffee-script": "*",
+    "ent": "<= 0.0.5"
   },
   "devDependencies": {
+    "cheerio": "*",
     "js-yaml": "*",
     "mocha": "~1.6.0",
     "should": "*"

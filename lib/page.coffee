@@ -7,6 +7,7 @@ class Page
     @active = !!data.active
     @rel = data.rel
     @hidden = !!data.hidden
+    @parent = data.parent || null
     @pages = []
 
     if Array.isArray data.pages
@@ -23,27 +24,27 @@ class Page
   addPage: (page) ->
     page = new Page page unless page instanceof Page
     @pages.push page
+    page.parent = this
 
   addPages: (pages) ->
     for page in pages
       @addPage page
 
   findById: (id) ->
-    found = null
-    return this if @id == id
+    @findBy 'id', id
 
-    for page in @pages
-      found = page.findById id
-      break if found
-
-    found
+  findByLabel: (label) ->
+    @findBy 'label', label
 
   findByUri: (uri) ->
-    found = null
-    return this if @uri == uri
+    @findBy 'uri', uri
 
+  findBy: (key, value) ->
+    return this if this[key] == value
+    found = null
+    
     for page in @pages
-      found = page.findByUri uri
+      found = page.findBy key, value
       break if found
 
     found

@@ -71,6 +71,45 @@ describe 'Page', ->
       page.addPages [page1, page2]
       page.pages.should.be.lengthOf 2
 
+  describe 'findById()', ->
+    it 'returns page that matches id', ->
+      page = new Page
+      page1 = new Page
+      page2 = new Page id: 'test-id'
+      page.addPages [page1, page2]
+      found = page.findById 'test-id'
+      found.should.equal page2
+
+  describe 'findByUri()', ->
+    it 'returns page that matches uri', ->
+      page = new Page
+      page1 = new Page
+      page2 = new Page uri: '/test-uri'
+      page.addPages [page1, page2]
+      found = page.findByUri '/test-uri'
+      found.should.equal page2
+
+  describe 'findByLabel()', ->
+    it 'returns page that matches label', ->
+      page = new Page
+      page1 = new Page
+      page2 = new Page label: 'test-label'
+      page.addPages [page1, page2]
+      found = page.findByLabel 'test-label'
+      found.should.equal page2
+
+  describe 'findBy()', ->
+    beforeEach ->
+      this.page = new Page
+      this.page1 = new Page
+      this.page2 = new Page properties
+      this.page.addPages [this.page1, this.page2]
+
+    for key, value of properties
+      it "returns page that matches #{key}", ->
+        found = this.page.findBy key, value
+        found.should.equal this.page2
+
   describe 'isActive()', ->
     it 'is false by default', ->
       page = new Page
@@ -150,3 +189,20 @@ describe 'Page', ->
       removed = this.page.remove page
       removed.should.be.true
       this.page.pages[0].pages.should.have.lengthOf 1
+
+  describe 'parent', ->
+    beforeEach ->
+      data =
+        id: 'top-level-page'
+        pages: 
+          '2nd-level-page':
+            pages: 
+              '3rd-level-page': {}
+              'another-3rd-level-page': {}
+          'another-2nd-level-page': {}
+      
+      this.page = new Page data
+
+    it 'returns parent page', ->
+      page = this.page.findById '3rd-level-page'
+      page.parent.should.have.property 'id', '2nd-level-page'

@@ -14,19 +14,19 @@ class Navigation
         @pages.push new Page data
 
   findById: (id) ->
-    found = null
+    @findBy 'id', id
 
-    for page in @pages
-      found = page.findById id
-      break if found
-
-    found
+  findByLabel: (label) ->
+    @findBy 'label', label
 
   findByUri: (uri) ->
-    found = null
+    @findBy 'uri', uri
 
+  findBy: (key, value) ->
+    found = null
+    
     for page in @pages
-      found = page.findByUri uri
+      found = page.findBy key, value
       break if found
 
     found
